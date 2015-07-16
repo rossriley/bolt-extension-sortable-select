@@ -1,6 +1,6 @@
 <?php
 
-namespace Rossriley\Extensions\Bolt\SortableSelect;
+namespace Bolt\Extensions\Ross\SortableSelect;
 
 use Bolt\Application;
 use Bolt\BaseExtension;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Rossriley\Extensions\Bolt\SortableSelect;
+namespace Bolt\Extensions\Ross\SortableSelect;
 
 if (isset($app)) {
     $app['extensions']->register(new Extension($app));

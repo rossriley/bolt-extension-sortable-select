@@ -1,5 +1,5 @@
 {
-    "name": "rossrily/sortable-multiselect",
+    "name": "rossriley/sortable-multiselect",
     "description": "An extension to allow multiple select fields to be sortable",
     "type": "bolt-extension",
     "require": {
@@ -18,8 +18,8 @@
             "init.php"
         ],
         "psr-4": {
-            "Rossriley\\Extensions\\Bolt\\SortableSelect\\": "",
-            "Rossriley\\Extensions\\Bolt\\SortableSelect\\Tests\\": "tests"
+            "Bolt\\Extensions\\Ross\\SortableSelect\\": "",
+            "Bolt\\Extensions\\Ross\\SortableSelect\\Tests\\": "tests"
         }
     },
     
