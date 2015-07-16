@@ -50,7 +50,7 @@
     {% set attr_select = attr_select|merge({'style': 'width: 100%;'}) %}
 {% endif %}
 
-{% if field.sortable|default(false) %}
+{% if field.sortable|default(false) and selection[0] %}
     {% set oldclass = attr_select.class %}
     {% set attr_select = attr_select|merge({ class: oldclass~' select2-sortable wide'}) %}
     
@@ -79,7 +79,7 @@
             {% endfor %}
         </select>
 
-        {% if option.multiple %}
+        {% if option.multiple and not field.sortable %}
         <div>{# TODO: move onclick-events to JS #}
             <a href="#" class="btn btn-default btn-xs" onclick="jQuery('#{{ key }} option').prop('selected', true); return false;">
                 <i class="fa fa-fw fa-check-square-o"></i>{{ __("Select all") }}
