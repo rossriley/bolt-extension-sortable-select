@@ -17,8 +17,10 @@ class Extension extends BaseExtension
 
     public function initialize()
     {
-        $this->addCss('assets/select2.sortable.css', 1);
-        $this->addJavascript('assets/select2.sortable.min.js', 1);
+        if ($this->app['config']->getWhichEnd() == 'backend') {
+            $this->addCss('assets/select2.sortable.css', 1);
+            $this->addJavascript('assets/select2.sortable.min.js', 1);
+        }
         
         $this->addTwigFunction('unique', 'unique');
 
