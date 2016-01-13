@@ -11,6 +11,7 @@ class Extension extends BaseExtension
     {
         parent::__construct($app);
         if ($this->app['config']->getWhichEnd() == 'backend') {
+            $this->app['htmlsnippets'] = true;
             $this->app['twig.loader.filesystem']->prependPath(__DIR__.'/twig');
         }
     }
