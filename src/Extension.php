@@ -29,7 +29,7 @@ class Extension extends SimpleExtension
     protected function registerTwigPaths()
     {
         return [
-            'twig'
+            'twig' => ['position' => 'prepend', 'namespace' => 'bolt']
         ];
     }
     
