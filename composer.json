@@ -3,7 +3,7 @@
     "description": "An extension to allow multiple select fields to be sortable",
     "type": "bolt-extension",
     "require": {
-        "bolt/bolt": ">1.9,<3.0.0"
+        "bolt/bolt": ">3.0,<4.0"
     },
     "license": "MIT",
     "authors": [{"name": "Ross Riley", "email": "riley.ross@gmail.com"}
@@ -14,9 +14,6 @@
     "minimum-stability":"dev",
     "prefer-stable":true,
     "autoload": {
-        "files": [
-            "init.php"
-        ],
         "psr-4": {
             "Bolt\\Extensions\\Ross\\SortableSelect\\": "",
             "Bolt\\Extensions\\Ross\\SortableSelect\\Tests\\": "tests"
@@ -28,6 +25,7 @@
         "bolt-screenshots": [
             "screenshot.png",
             "screenshot2.png"
-        ]
+        ],
+        "bolt-class": "Bolt\\Extensions\\Ross\\SortableSelect\\Extension"
     }
 }
