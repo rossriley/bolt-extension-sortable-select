@@ -14,8 +14,8 @@ class Extension extends SimpleExtension
     protected function registerAssets()
     {
         return [
-            (new Stylesheet('assets/select2.sortable.css'))->setZone('backend'),
-            (new Javascript('assets/select2.sortable.min.js'))->setZone('backend'),
+            (new Stylesheet('select2.sortable.css'))->setZone('backend'),
+            (new Javascript('select2.sortable.min.js'))->setZone('backend'),
         ];
     }
 
