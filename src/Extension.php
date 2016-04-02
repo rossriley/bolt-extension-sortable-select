@@ -15,7 +15,7 @@ class Extension extends SimpleExtension
     {
         return [
             new Stylesheet('assets/select2.sortable.css'),
-            new Javacript('assets/select2.sortable.min.js')
+            new Javascript('assets/select2.sortable.min.js')
         ];
     }
 
