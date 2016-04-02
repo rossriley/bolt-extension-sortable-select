@@ -15,7 +15,7 @@
     "prefer-stable":true,
     "autoload": {
         "psr-4": {
-            "Bolt\\Extensions\\Ross\\SortableSelect\\": "",
+            "Bolt\\Extensions\\Ross\\SortableSelect\\": "src",
             "Bolt\\Extensions\\Ross\\SortableSelect\\Tests\\": "tests"
         }
     },

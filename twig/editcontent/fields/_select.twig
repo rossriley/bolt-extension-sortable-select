@@ -1,10 +1,13 @@
+{# ################################ New V3 Code   ######################### #}
+
 {#=== OPTIONS ========================================================================================================#}
+
 {% set option = {
-    class:     field.class|default(''),
-    label:     field.label|default(''),
+    info:      field.info|default(''),
+    label:     field.label,
     multiple:  (field.multiple is defined and field.multiple),
+    required:  field.required|default(false),
     values:    field.values|default([]),
-    info:      field.info|default('')
 } %}
 
 {#=== INIT ===========================================================================================================#}
@@ -24,88 +27,76 @@
     {% set values = lookups|selectfield(lookupfield, option.multiple, field.keys|default('id')) %}
 {% endif %}
 
-{# get the current selection. Either a single value, or an array. #}
+{# Get the current selection. Either a single value, or an array. #}
 {% set selection = context.content.get(contentkey)|default(null) %}
 {% if selection is not iterable %}
     {% set selection = [ selection ] %}
 {% endif %}
 
-{# If the current selection contains an existing id, we must use _only_ the id, and not accept a fallback. #}
-{% if selection|first in values|keys %}
-    {% set onlyids = true %}
-{% else %}
-    {% set onlyids = false %}
-{% endif %}
-
-{% set attr_select = {
-    class:     option.class,
-    id:        key,
-    multiple:  option.multiple,
-    name:      (option.multiple) ? name ~ '[]' : name,
-} %}
-
-{# If the field has autocomplete, we need to set our own style, and remove the class attribute. #}
-{% if field.autocomplete|default(false) %}
-    {% set attr_select = attr_select|merge({'class': ''}) %}
-    {% set attr_select = attr_select|merge({'style': 'width: 100%;'}) %}
-{% endif %}
-
 {% if field.sortable|default(false) %}
-    {% set oldclass = attr_select.class %}
-    {% set attr_select = attr_select|merge({ class: oldclass~' select2-sortable wide'}) %}
-    
+    {% set oldclass = option.class %}
+    {% set option = option|merge({ class: oldclass~' select2-sortable wide'}) %}
+
     {% set newvals = [] %}
     {% for key, sel in selection %}
         {% set newvals = newvals|merge({ (key):values[sel]})%}
     {% endfor %}
     {% set values = unique(newvals, values)%}
 {% endif %}
+
+{# If the current selection contains an existing id, we must use _only_ the id, and not accept a fallback. #}
+{% set onlyids = selection|first in values|keys %}
+
+{# Build the select options array #}
+{% set options = [] %}
+{% for id, value in values %}
+    {% set is_array = (value is iterable and (value | length) > 1) %}
+    {% set options = options|merge([{
+    value:     id,
+    text:      is_array ? value[0:]|join(' / ') : value,
+    selected:  id in selection or (not onlyids and (is_array ? value[0] : value) in selection),
+    }]) %}
+{% endfor %}
+
+{# BUIC options #}
+{% set buic_opt_select = {
+    'all':       option.multiple,
+    'clear':     true,
+    'id':        key,
+    'multiple':  option.multiple,
+    'name':      option.multiple ? name ~ '[]' : name,
+    'options':   options,
+    'required':  option.required,
+} %}
+
 {#=== FIELDSET =======================================================================================================#}
 
-<fieldset class="multiselect">
+{% extends '@bolt/_base/_fieldset.twig' %}
 
-    <label class="col-sm-3 control-label">{{ (option.info) ? macro.infopop(labelkey, option.info) : labelkey }}</label>
-    <div class="col-sm-9{% if field.sortable|default(false) %} sortable-select2-container{% endif %}">
-        <select{{ macro.attr(attr_select) }}>
-            {% for id, value in values %}
-                {% set is_array = (value is iterable and (value | length) > 1) %}
-                {% set attr_opt = {
-                    value:     id,
-                    selected:  id in selection or (not onlyids and (is_array ? value[0] : value) in selection),
-                    "data-order": ordering
-                } %}
+{% block fieldset_type 'select' %}
+{% block fieldset_widget 'fieldSelect' %}
 
-                <option{{ macro.attr(attr_opt) }}>{{ is_array ? value[0:]|join(' / ') : value }}</option>
-            {% endfor %}
-        </select>
+{% set fieldset_conf = {
+    autocomplete: field.autocomplete|default(false)
+} %}
 
-        {% if option.multiple %}
-        <div>{# TODO: move onclick-events to JS #}
-            <a href="#" class="btn btn-default btn-xs" onclick="jQuery('#{{ key }} option').prop('selected', true); return false;">
-                <i class="fa fa-fw fa-check-square-o"></i>{{ __("Select all") }}
-            </a>
-            <a href="#" class="btn btn-default btn-xs" onclick="jQuery('#{{ key }} option').prop('selected', false); return false;">
-                <i class="fa fa-fw fa-square-o"></i>{{ __("Select none") }}
-            </a>
-        </div>
-        {% endif %}
-    </div>
-    
+{% block fieldset_label_text  labelkey %}
+{% block fieldset_label_info  option.info %}
+{% block fieldset_label_class 'col-sm-3' %}
+{% block fieldset_label_for   key %}
+
+{% block fieldset_controls %}
     {% if field.sortable|default(false) %}
         <script>
             $(function() {
                 $('#{{ key }}').select2Sortable({});
             });
         </script>
-    {% elseif field.autocomplete|default(false) %}
-        <script>
-            $(function() {
-                $('#{{ key }}').select2({
-                    placeholder: "{{ __('(none)') }}",
-                    allowClear: true
-                });
-            });
-        </script>
-    {% endif %}    
+    {% endif %}
 
-</fieldset>
+    {% from '@bolt/_buic/_select.twig' import buic_select %}
+
+    <div class="col-sm-9">
+        {{ buic_select(buic_opt_select) }}
+    </div>
+{% endblock fieldset_controls %}
