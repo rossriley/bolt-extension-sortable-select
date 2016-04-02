@@ -3,7 +3,7 @@
 namespace Bolt\Extensions\Ross\SortableSelect;
 
 use Bolt\Application;
-use Bolt\Asset\File\Javascript;
+use Bolt\Asset\File\JavaScript;
 use Bolt\Asset\File\Stylesheet;
 use Bolt\Extension\SimpleExtension;
 
@@ -15,7 +15,7 @@ class Extension extends SimpleExtension
     {
         return [
             (new Stylesheet('select2.sortable.css'))->setZone('backend'),
-            (new Javascript('select2.sortable.min.js'))->setZone('backend'),
+            (new JavaScript('select2.sortable.min.js'))->setZone('backend'),
         ];
     }
 
