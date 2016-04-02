@@ -3,9 +3,9 @@
 namespace Bolt\Extensions\Ross\SortableSelect;
 
 use Bolt\Application;
-use Bolt\BaseExtension;
+use Bolt\Extension\SimpleExtension;
 
-class Extension extends BaseExtension
+class Extension extends SimpleExtension
 {
     public function __construct(Application $app)
     {
@@ -16,15 +16,19 @@ class Extension extends BaseExtension
         }
     }
 
-    public function initialize()
+    protected function registerAssets()
     {
-        if ($this->app['config']->getWhichEnd() == 'backend') {
-            $this->addCss('assets/select2.sortable.css', 1);
-            $this->addJavascript('assets/select2.sortable.min.js', 1);
-        }
-        
-        $this->addTwigFunction('unique', 'unique');
+        return [
+            new Stylesheet('assets/select2.sortable.css'),
+            new Javacript('assets/select2.sortable.min.js')
+    ];
+}
 
+    protected function registerTwigFunctions()
+    {
+        return [
+            'unique' => 'unique',
+        ];
     }
     
     public function unique($arr1, $arr2)
@@ -39,8 +43,5 @@ class Extension extends BaseExtension
         return $compiled;
     }
 
-    public function getName()
-    {
-        return 'sortable_select';
-    }
+
 }
