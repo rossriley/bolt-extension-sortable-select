@@ -4,7 +4,7 @@
 
 {% set option = {
     info:      field.info|default(''),
-    label:     field.label~' enhanced by sortable',
+    label:     field.label,
     multiple:  (field.multiple is defined and field.multiple),
     required:  field.required|default(false),
     values:    field.values|default([]),
