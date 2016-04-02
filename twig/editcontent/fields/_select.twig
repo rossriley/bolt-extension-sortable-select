@@ -96,7 +96,7 @@
 
     {% from '@bolt/_buic/_select.twig' import buic_select %}
 
-    <div class="col-sm-9">
+    <div class="col-sm-9{% if field.sortable|default(false) %} sortable-select2-container{% endif %}">
         {{ buic_select(buic_opt_select) }}
     </div>
 {% endblock fieldset_controls %}
