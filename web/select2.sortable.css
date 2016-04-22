@@ -16,7 +16,7 @@
     border-color: #d0d0d0;
 }
 
-.sortable-select2-container .select2-selection__choice:hover {
+.sortable-select2-container .select2-selection__choice.ui-sortable-helper {
     cursor:move;
 }
 
