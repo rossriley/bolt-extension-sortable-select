@@ -89,14 +89,10 @@
     {% if field.sortable|default(false) %}
         <script>
             $(function() {
-                $.widget('bolt.myfieldSelect', $.bolt.fieldSelect, {
-                    _create: function() {
-                        this._super();
-                        var select = this.element.find('select');
-                        console.log(select);
-                    }
+                $(function(){
+                    $('#{{ key }}').select2('destroy').select2Sortable({});
                 });
-                $('#{{ key }}').select2Sortable({});
+
             });
         </script>
     {% endif %}
