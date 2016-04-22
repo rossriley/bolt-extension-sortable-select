@@ -3,20 +3,21 @@
 }
 
 .sortable-select2-container .select2-container {
-  display: block;
-  width: 100%;
+    display: block;
+    width: 100%;
 }
 
 .sortable-select2-container .select2-selection__choice {
-  border-radius: 0px;
-  border-color: #d0d0d0;
+
 }
 
 .sortable-select2-container .select2-selection__choice {
-  border-color: #d0d0d0;
-  padding: 0px;
-  display: block;
-  width:100%;
+    border-color: #d0d0d0;
+    padding: 0px;
+    display: block;
+    width:100%;
+    border-radius: 0px;
+    border-color: #d0d0d0;
 }
 
 .sortable-select2-container .select2-drop {
