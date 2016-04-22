@@ -89,8 +89,7 @@
     {% if field.sortable|default(false) %}
         <script>
             $(function() {
-                $('#{{ key }}').on('create', function(e) {console.log(e)});
-                $('#{{ key }}').select2('destroy').select2Sortable({});
+                $('#{{ key }}').select2Sortable({});
             });
         </script>
     {% endif %}
